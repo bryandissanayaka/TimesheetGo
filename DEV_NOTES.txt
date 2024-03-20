@@ -1,2 +1,10 @@
 Tutorial could be a question mark button in the corner that takes you to a video
 
+https://colorhunt.co/palette/eb455ffcffe7bad7e92b3467
+
+TODO:
+- could change routing to use react router to not render the entire page when changing page - this is kinda long and unnecessary so leave it for later
+
+NEXT:
+- routing
+- login
