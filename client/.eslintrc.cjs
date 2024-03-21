@@ -18,5 +18,6 @@ module.exports = {
       { allowConstantExport: true },
     ],
     "no-unused-vars": "off", //TODO: Check if this impacts performance
+    "react/prop-types": "off", // Added this when given errors in Sidebar->CustomLink()
   },
 };

@@ -4,6 +4,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import GradingIcon from "@mui/icons-material/Grading";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import LogoutIcon from "@mui/icons-material/Logout";
+import HelpIcon from "@mui/icons-material/Help";
 
 export const SidebarData = [
   {
@@ -23,8 +24,8 @@ export const SidebarData = [
   },
   {
     title: "Help",
-    icon: <NotificationsIcon />,
-    link: "/notifications",
+    icon: <HelpIcon />,
+    link: "/help",
   },
   {
     title: "Logout",

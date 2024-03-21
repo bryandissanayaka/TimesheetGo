@@ -3,10 +3,10 @@ import "../App.css";
 
 import { SidebarData } from "./SidebarData";
 
-function Sidebar() {
+export default function Sidebar() {
   return (
     <div className="Sidebar">
-      <h1 className="MainTitle">TIMESHEETGO</h1>
+      <h1 className="MainTitle"> TIMESHEETGO</h1>
       <ul className="SidebarList">
         {SidebarData.map((val, key) => {
           return (
@@ -17,7 +17,9 @@ function Sidebar() {
               }}
               className="SidebarElement"
               id={
-                window.location.pathname == val.link
+                window.location.pathname == "/" && val.link == "/submit"
+                  ? "active-sidebar-element"
+                  : window.location.pathname == val.link
                   ? "active-sidebar-element"
                   : ""
               }
@@ -31,5 +33,3 @@ function Sidebar() {
     </div>
   );
 }
-
-export default Sidebar;

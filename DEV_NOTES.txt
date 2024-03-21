@@ -5,6 +5,16 @@ https://colorhunt.co/palette/eb455ffcffe7bad7e92b3467
 TODO:
 - could change routing to use react router to not render the entire page when changing page - this is kinda long and unnecessary so leave it for later
 
-NEXT:
-- routing
-- login
+[x] sidebar
+    [x] styling
+    [x] routing 
+[ ] login
+
+
+Logout page could be a "are you sure?"
+
+
+Timesheet:
+    sql design
+        week hours could be parsed as a string
+            0900-1200,1300-1700.
