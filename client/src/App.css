@@ -77,9 +77,33 @@ body,
   border: 2px solid #2b3467;
   border-radius: 10px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
-  padding: 10px;
+  padding: 20px;
 }
 
 .TimePicker {
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.TimePicker label {
+  display: flex;
+  align-items: center;
+  margin-right: 10px; /* Add spacing between label and input */
+}
+
+.TimePicker input {
+  width: 100px;
+  padding: 5px;
+  font-size: 16px;
+  margin-left: 5px; /* Add spacing between label and input */
+}
+
+.RedButton {
+  background-color: #eb455f;
+  color: #fcffe7;
+  padding: 10px;
+  font-weight: bold;
+  
 }

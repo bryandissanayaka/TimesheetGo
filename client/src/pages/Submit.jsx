@@ -1,8 +1,8 @@
 import React from "react";
-import Timesheet from "../components/TimesheetForm.jsx";
+import TimesheetForm from "../components/TimesheetForm.jsx";
 
 function Submit() {
-  return <div><Timesheet/></div>;
+  return <div><TimesheetForm/></div>;
 }
 
 export default Submit;

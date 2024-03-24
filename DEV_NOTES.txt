@@ -2,19 +2,19 @@ Tutorial could be a question mark button in the corner that takes you to a video
 
 https://colorhunt.co/palette/eb455ffcffe7bad7e92b3467
 
-TODO:
+COULD DO:
 - could change routing to use react router to not render the entire page when changing page - this is kinda long and unnecessary so leave it for later
 
-[x] sidebar
-    [x] styling
-    [x] routing 
-[ ] login
+6 USE CASES:
+- login
+- submit ts
+- approve/reject ts
+- export timesheet
+- set reminders
+- get help
 
 
-Logout page could be a "are you sure?"
 
 
-Timesheet:
-    sql design
-        week hours could be parsed as a string
-            0900-1200,1300-1700.
+NEED TO FIX:
+week start date needs to have a default value

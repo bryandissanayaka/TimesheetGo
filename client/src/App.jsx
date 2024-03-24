@@ -29,7 +29,7 @@ export default function App() {
     case "/help":
       page = <Help />;
       break;
-    case "/login":
+    case "/logout":
       page = <Login />;
       break;
   }
