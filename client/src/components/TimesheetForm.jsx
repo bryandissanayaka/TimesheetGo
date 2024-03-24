@@ -138,31 +138,35 @@ const TimesheetForm = () => {
         <br />
         <label>
           Week Start Date:
-          <input
-            type="date"
-            name="WeekStartDate"
-            value={timesheetData.WeekStartDate}
-            onChange={handleChange}
-          />
-          <button
-            type="button"
-            onClick={() => {
-              const today = new Date();
-              const dayOfWeek = today.getDay();
-              const mondayDate = new Date(
-                today.setDate(
-                  today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1)
-                )
-              );
-              const formattedMondayDate = mondayDate.toISOString().slice(0, 10);
-              setTimesheetData({
-                ...timesheetData,
-                WeekStartDate: formattedMondayDate,
-              });
-            }}
-          >
-            This Week
-          </button>
+          <div className="WeekInputContainer">
+            <input
+              type="date"
+              name="WeekStartDate"
+              value={timesheetData.WeekStartDate}
+              onChange={handleChange}
+            />
+            <button
+              type="button"
+              onClick={() => {
+                const today = new Date();
+                const dayOfWeek = today.getDay();
+                const mondayDate = new Date(
+                  today.setDate(
+                    today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1)
+                  )
+                );
+                const formattedMondayDate = mondayDate
+                  .toISOString()
+                  .slice(0, 10);
+                setTimesheetData({
+                  ...timesheetData,
+                  WeekStartDate: formattedMondayDate,
+                });
+              }}
+            >
+              This Week
+            </button>
+          </div>
         </label>
         <br />
         <div className="TimePicker">

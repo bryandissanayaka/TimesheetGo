@@ -3,9 +3,9 @@
 .App {
   width: 100vw;
   height: 100vh;
-  background-color: #fcffe7;
   display: flex;
   flex-direction: row;
+  background-color: #1d2a44;
 }
 
 html,
@@ -78,6 +78,7 @@ body,
   border-radius: 10px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
   padding: 20px;
+  background-color: #bad7e9;
 }
 
 .TimePicker {
@@ -100,10 +101,25 @@ body,
   margin-left: 5px; /* Add spacing between label and input */
 }
 
-.RedButton {
-  background-color: #eb455f;
-  color: #fcffe7;
-  padding: 10px;
-  font-weight: bold;
-  
+button {
+  display: inline-block;
+  padding: 6px 6px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.WeekInputContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.WeekInputContainer input {
+  margin-right: 10px;
 }

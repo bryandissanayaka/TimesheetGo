@@ -55,10 +55,17 @@ app.post("/submit-timesheet", (req, res) => {
       SaturdayClockOut,
       SundayClockIn,
       SundayClockOut,
-    ]
+    ],
+    (error, results) => {
+      if (error) {
+        console.error("Error occurred while inserting timesheet:", error);
+        res.status(500).send("Error occurred while inserting timesheet");
+      } else {
+        console.log("Timesheet inserted successfully");
+        res.status(200).send("Timesheet submitted successfully");
+      }
+    }
   );
-
-  res.send(WeekStartDate);
 });
 
 app.listen(5000, () => {
