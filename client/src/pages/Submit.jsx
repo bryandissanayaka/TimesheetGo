@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import TimesheetForm from "../components/TimesheetForm.jsx";
+import { LoginContext } from "../LoginContext.jsx";
 
 function Submit() {
-  return <div><TimesheetForm/></div>;
+  const { loginStatus } = useContext(LoginContext);
+  console.log(`Login status: ${loginStatus}`);
+  return (
+    <div>
+      <TimesheetForm />
+    </div>
+  );
 }
 
 export default Submit;

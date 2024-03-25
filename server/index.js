@@ -16,7 +16,7 @@ const db = mysql.createConnection({
 app.post("/submit-timesheet", (req, res) => {
   //res.send("backend submit timesheet");
 
-  // !!!need to send consultant ID!!!
+  // TODO: !!!need to send consultant ID!!!
   const ProjectName = req.body.ProjectName;
   const WeekStartDate = req.body.WeekStartDate;
   const MondayClockIn = req.body.MondayClockIn;
@@ -63,6 +63,41 @@ app.post("/submit-timesheet", (req, res) => {
       } else {
         console.log("Timesheet inserted successfully");
         res.status(200).send("Timesheet submitted successfully");
+      }
+    }
+  );
+});
+
+app.post("/submit-register", (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  const type = req.body.type;
+  db.query(
+    "INSERT INTO users (type, username, password) VALUES (?,?,?)",
+    [type, username, password],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+      }
+    }
+  );
+});
+
+app.post("/submit-login", (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  db.query(
+    "SELECT * FROM users WHERE username = ? AND password = ?",
+    [username, password],
+    (err, result) => {
+      if (err) {
+        res.send({ error: err });
+      }
+      if (result.length > 0) {
+        res.send(result);
+      } else {
+        res.send({ message: "Wrong username or password." });
       }
     }
   );
