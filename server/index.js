@@ -72,14 +72,31 @@ app.post("/submit-register", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   const type = req.body.type;
+
+  // First, check if the username already exists
   db.query(
-    "INSERT INTO users (type, username, password) VALUES (?,?,?)",
-    [type, username, password],
+    "SELECT * FROM users WHERE username = ?",
+    [username],
     (err, result) => {
       if (err) {
         console.log(err);
-      } else {
       }
+      if (result.length > 0) {
+        res.status(400).send("Username already exists");
+        return;
+      }
+      //if username does not exist
+      db.query(
+        "INSERT INTO users (type, username, password) VALUES (?,?,?)",
+        [type, username, password],
+        (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.status(200).send("Registration successful");
+          }
+        }
+      );
     }
   );
 });

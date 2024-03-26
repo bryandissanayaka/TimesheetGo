@@ -1,17 +1,29 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-
 import Sidebar from "./components/Sidebar.jsx";
-
 import Submit from "./pages/Submit.jsx";
 import View from "./pages/View.jsx";
 import Reminders from "./pages/Reminders.jsx";
 import Help from "./pages/Help.jsx";
 import LoginRegister from "./pages/LoginRegister.jsx";
-import { LoginProvider } from "./LoginContext.jsx";
+import { LoginContext, LoginProvider } from "./LoginContext.jsx";
+
 export default function App() {
+  return (
+    <div className="App">
+      <LoginProvider>
+        <Sidebar />
+        <PageRouter />
+      </LoginProvider>
+    </div>
+  );
+}
+
+const PageRouter = () => {
   let page;
+
+  //if (loginStatus) {
   switch (window.location.pathname) {
     case "/":
       page = <Submit />;
@@ -31,14 +43,8 @@ export default function App() {
     case "/login":
       page = <LoginRegister />;
       break;
+    //}
   }
 
-  return (
-    <div className="App">
-      <LoginProvider>
-        <Sidebar />
-        <div className="Page">{page}</div>
-      </LoginProvider>
-    </div>
-  );
-}
+  return <div className="Page">{page}</div>;
+};

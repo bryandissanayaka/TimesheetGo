@@ -18,3 +18,9 @@ COULD DO:
 
 NEED TO FIX:
 week start date needs to have a default value
+
+
+
+questions:
+does login need to fully work
+    if username exists show user

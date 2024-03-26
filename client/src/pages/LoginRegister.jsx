@@ -44,7 +44,7 @@ const LoginRegister = () => {
           if (response.data.message) {
             setLoginStatus(response.data.message);
           } else {
-            setLoginStatus(`Logged in as ${response.data[0].username}.`);
+            setLoginStatus(`Logged in as ${response.data[0].id}.`);
             console.log(loginStatus);
           }
         });

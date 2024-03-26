@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../App.css";
 
 import { SidebarData } from "./SidebarData";
+import { LoginContext } from "../LoginContext";
 
 export default function Sidebar() {
+  const { loginStatus, handleLogout } = useContext(LoginContext);
+  const handleLogoutAndRedirect = () => {
+    handleLogout();
+  };
   return (
     <div className="Sidebar">
       <h1 className="MainTitle"> TIMESHEETGO</h1>
@@ -25,11 +30,24 @@ export default function Sidebar() {
               }
             >
               <div id="sidebar-icon">{val.icon}</div>
-              <h2 id="sidebar-title">{val.title}</h2>
+              <h2 id="sidebar-title">
+                {val.title == "Logout"
+                  ? loginStatus
+                    ? "Logout"
+                    : "Login"
+                  : val.title}
+              </h2>
             </li>
           );
         })}
       </ul>
+      <div>
+        <h2>Login Status:</h2>
+        <p>{loginStatus}</p>
+        {loginStatus && (
+          <button onClick={handleLogoutAndRedirect}>Logout</button>
+        )}
+      </div>
     </div>
   );
 }
