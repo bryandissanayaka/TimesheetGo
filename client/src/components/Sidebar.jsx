@@ -5,10 +5,7 @@ import { SidebarData } from "./SidebarData";
 import { LoginContext } from "../LoginContext";
 
 export default function Sidebar() {
-  const { loginStatus, handleLogout } = useContext(LoginContext);
-  const handleLogoutAndRedirect = () => {
-    handleLogout();
-  };
+  const { loginStatus } = useContext(LoginContext);
   return (
     <div className="Sidebar">
       <h1 className="MainTitle"> TIMESHEETGO</h1>
@@ -44,9 +41,6 @@ export default function Sidebar() {
       <div>
         <h2>Login Status:</h2>
         <p>{loginStatus}</p>
-        {loginStatus && (
-          <button onClick={handleLogoutAndRedirect}>Logout</button>
-        )}
       </div>
     </div>
   );

@@ -8,7 +8,8 @@ const LoginRegister = () => {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("consultant");
 
-  const { loginStatus, setLoginStatus } = useContext(LoginContext);
+  const { loginStatus, setLoginStatus, handleLogout } =
+    useContext(LoginContext);
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -20,6 +21,10 @@ const LoginRegister = () => {
 
   const handleRoleChange = (e) => {
     setRole(e.target.value);
+  };
+
+  const handleLogoutAndRedirect = () => {
+    handleLogout();
   };
 
   const handleSubmit = (e) => {
@@ -44,7 +49,7 @@ const LoginRegister = () => {
           if (response.data.message) {
             setLoginStatus(response.data.message);
           } else {
-            setLoginStatus(`Logged in as ${response.data[0].id}.`);
+            setLoginStatus(`${response.data[0].id}`);
             console.log(loginStatus);
           }
         });
@@ -71,61 +76,70 @@ const LoginRegister = () => {
   };
 
   return (
-    <div className="TimesheetForm">
-      <h2>{showLogin ? "Login" : "Register"}</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={handleUsernameChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={handlePasswordChange}
-            required
-          />
-        </div>
-        {!showLogin && (
-          <div>
-            <label>Role:</label>
+    //login/register form
+    <>
+      {!loginStatus ? (
+        <div className="TimesheetForm">
+          <h2>{showLogin ? "Login" : "Register"}</h2>
+          <form onSubmit={handleSubmit}>
             <div>
-              <label>
-                <input
-                  type="radio"
-                  value="consultant"
-                  checked={role === "consultant"}
-                  onChange={handleRoleChange}
-                />
-                Consultant
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="manager"
-                  checked={role === "manager"}
-                  onChange={handleRoleChange}
-                />
-                Manager
-              </label>
+              <label htmlFor="username">Username:</label>
+              <input
+                type="text"
+                id="username"
+                value={username}
+                onChange={handleUsernameChange}
+                required
+              />
             </div>
-          </div>
-        )}
-        <button type="submit">{showLogin ? "Login" : "Register"}</button>
-      </form>
-      <button onClick={toggleForm}>
-        {showLogin ? "Need to Register?" : "Back to Login"}
-      </button>
-      <h3>{loginStatus}</h3>
-    </div>
+            <div>
+              <label htmlFor="password">Password:</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={handlePasswordChange}
+                required
+              />
+            </div>
+            {!showLogin && (
+              <div>
+                <label>Role:</label>
+                <div>
+                  <label>
+                    <input
+                      type="radio"
+                      value="consultant"
+                      checked={role === "consultant"}
+                      onChange={handleRoleChange}
+                    />
+                    Consultant
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      value="manager"
+                      checked={role === "manager"}
+                      onChange={handleRoleChange}
+                    />
+                    Manager
+                  </label>
+                </div>
+              </div>
+            )}
+            {/* first */}
+            <button type="submit">{showLogin ? "Login" : "Register"}</button>
+          </form>
+          {/* second */}
+          <button onClick={toggleForm}>
+            {showLogin ? "Need to Register?" : "Back to Login"}
+          </button>
+          <h3>{loginStatus}</h3>
+        </div>
+      ) : (
+        <button onClick={handleLogoutAndRedirect}>Logout</button>
+      )}
+    </>
   );
 };
 

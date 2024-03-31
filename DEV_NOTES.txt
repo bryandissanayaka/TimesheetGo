@@ -5,9 +5,11 @@ https://colorhunt.co/palette/eb455ffcffe7bad7e92b3467
 COULD DO:
 - could change routing to use react router to not render the entire page when changing page - this is kinda long and unnecessary so leave it for later
 
-6 USE CASES:
-- login
-- submit ts
+USE CASES:
+- login ✅
+- register ✅ 
+- submit ts ✅
+- view ts ✅
 - approve/reject ts
 - export timesheet
 - set reminders

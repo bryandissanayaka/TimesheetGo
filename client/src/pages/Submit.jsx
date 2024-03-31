@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import TimesheetForm from "../components/TimesheetForm.jsx";
+import LoginRegister from "./LoginRegister.jsx";
 import { LoginContext } from "../LoginContext.jsx";
 
 function Submit() {

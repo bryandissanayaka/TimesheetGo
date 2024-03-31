@@ -16,7 +16,7 @@ const db = mysql.createConnection({
 app.post("/submit-timesheet", (req, res) => {
   //res.send("backend submit timesheet");
 
-  // TODO: !!!need to send consultant ID!!!
+  const ConsultantId = req.body.ConsultantId;
   const ProjectName = req.body.ProjectName;
   const WeekStartDate = req.body.WeekStartDate;
   const MondayClockIn = req.body.MondayClockIn;
@@ -33,11 +33,11 @@ app.post("/submit-timesheet", (req, res) => {
   const SaturdayClockOut = req.body.SaturdayClockOut;
   const SundayClockIn = req.body.SundayClockIn;
   const SundayClockOut = req.body.SundayClockOut;
-
+  console.log(`ID: ${ConsultantId}`);
   db.query(
     "INSERT INTO timesheets (consultant_id, status, week_of, project_name, monday_in, monday_out, tuesday_in, tuesday_out, wednesday_in, wednesday_out, thursday_in, thursday_out, friday_in, friday_out, saturday_in, saturday_out, sunday_in, sunday_out) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
     [
-      1, // Hardcoded consultant_id (temp)
+      ConsultantId,
       "pending", // default status
       WeekStartDate,
       ProjectName,
@@ -115,6 +115,23 @@ app.post("/submit-login", (req, res) => {
         res.send(result);
       } else {
         res.send({ message: "Wrong username or password." });
+      }
+    }
+  );
+});
+
+app.get("/timesheets/:consultantId", (req, res) => {
+  const consultantId = req.params.consultantId;
+
+  db.query(
+    "SELECT * FROM timesheets WHERE consultant_id = ?",
+    [consultantId],
+    (error, results) => {
+      if (error) {
+        console.error("Error occurred while retrieving timesheets:", error);
+        res.status(500).send("Error occurred while retrieving timesheets");
+      } else {
+        res.status(200).json(results);
       }
     }
   );

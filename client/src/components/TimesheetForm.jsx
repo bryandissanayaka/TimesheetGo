@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
+import { LoginContext } from "../LoginContext";
 
 const TimesheetForm = () => {
+  const { loginStatus } = useContext(LoginContext);
   const [timesheetData, setTimesheetData] = useState({
     ProjectName: "",
     WeekStartDate: "",
@@ -91,7 +93,10 @@ const TimesheetForm = () => {
     }
 
     // Send clock in and clock out times
+    const consultantId = Number(loginStatus);
+    console.log(loginStatus);
     const dataToSend = {
+      ConsultantId: consultantId,
       ProjectName: timesheetData.ProjectName,
       WeekStartDate: timesheetData.WeekStartDate,
       MondayClockIn: timesheetData.MondayClockIn,
