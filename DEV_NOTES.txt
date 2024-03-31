@@ -11,7 +11,7 @@ USE CASES:
 - submit ts ✅
 - view ts ✅
 - approve/reject ts
-- export timesheet
+- export timesheet ✅
 - set reminders
 - get help
 
