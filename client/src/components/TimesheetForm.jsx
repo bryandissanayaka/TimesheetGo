@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { LoginContext } from "../LoginContext";
 
@@ -118,14 +118,30 @@ const TimesheetForm = () => {
     axios
       .post("http://localhost:5000/submit-timesheet", dataToSend)
       .then((response) => {
-        console.log(response.data);
         // Handle success
+        console.log(response.data);
+        alert("Timesheet submitted successfully.");
       })
       .catch((error) => {
-        console.error("Error:", error);
         // Handle error
+        console.error("Error:", error);
         alert("Error submitting timesheet.");
       });
+  };
+  useEffect(() => {
+    setToThisWeek();
+  }, []);
+  const setToThisWeek = () => {
+    const today = new Date();
+    const dayOfWeek = today.getDay();
+    const mondayDate = new Date(
+      today.setDate(today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1))
+    );
+    const formattedMondayDate = mondayDate.toISOString().slice(0, 10);
+    setTimesheetData({
+      ...timesheetData,
+      WeekStartDate: formattedMondayDate,
+    });
   };
 
   return (
@@ -141,38 +157,22 @@ const TimesheetForm = () => {
           />
         </label>
         <br />
+        <br />
         <label>
           Week Start Date:
-          <div className="WeekInputContainer">
+          <div className="weekInputContainer">
             <input
               type="date"
               name="WeekStartDate"
               value={timesheetData.WeekStartDate}
               onChange={handleChange}
             />
-            <button
-              type="button"
-              onClick={() => {
-                const today = new Date();
-                const dayOfWeek = today.getDay();
-                const mondayDate = new Date(
-                  today.setDate(
-                    today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1)
-                  )
-                );
-                const formattedMondayDate = mondayDate
-                  .toISOString()
-                  .slice(0, 10);
-                setTimesheetData({
-                  ...timesheetData,
-                  WeekStartDate: formattedMondayDate,
-                });
-              }}
-            >
+            <button type="button" onClick={setToThisWeek}>
               This Week
             </button>
           </div>
         </label>
+        <br />
         <br />
         <div className="TimePicker">
           <label>
@@ -314,7 +314,6 @@ const TimesheetForm = () => {
             />
           </label>
         </div>
-
         <br />
         <button className="RedButton" type="submit">
           Submit

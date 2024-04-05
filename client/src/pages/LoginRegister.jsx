@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
-import { LoginContext, LoginProvider } from "../LoginContext.jsx";
+import { LoginContext } from "../LoginContext.jsx";
 
 const LoginRegister = () => {
   const [showLogin, setShowLogin] = useState(true);
@@ -8,8 +8,13 @@ const LoginRegister = () => {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("consultant");
 
-  const { loginStatus, setLoginStatus, handleLogout } =
-    useContext(LoginContext);
+  const {
+    loginStatus,
+    setLoginStatus,
+    roleStatus,
+    setRoleStatus,
+    handleLogout,
+  } = useContext(LoginContext);
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -27,6 +32,29 @@ const LoginRegister = () => {
     handleLogout();
   };
 
+  function login(username, password) {
+    axios
+      .post("http://localhost:5000/submit-login", {
+        username: username,
+        password: password,
+      })
+      .then((response) => {
+        if (response.data.message) {
+          setLoginStatus("");
+          alert("Incorrect username or password.");
+        } else {
+          setLoginStatus(`${response.data[0].id}`);
+          // Set roleStatus here
+          setRoleStatus(response.data[0].type);
+          if (response.data[0].type === "consultant") {
+            window.location.pathname = "/submit";
+          } else {
+            window.location.pathname = "/view";
+          }
+        }
+      });
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (username.trim() === "") {
@@ -38,24 +66,8 @@ const LoginRegister = () => {
       return;
     }
     if (showLogin) {
-      //console.log("Login:", username, password);
-      axios
-        .post("http://localhost:5000/submit-login", {
-          username: username,
-          password: password,
-        })
-        .then((response) => {
-          console.log(response);
-          if (response.data.message) {
-            setLoginStatus(response.data.message);
-          } else {
-            setLoginStatus(`${response.data[0].id}`);
-            console.log(loginStatus);
-          }
-        });
+      login(username, password);
     } else {
-      // Handle register logic
-      //console.log("Register:", username, password, role);
       axios
         .post("http://localhost:5000/submit-register", {
           username: username,
@@ -63,7 +75,10 @@ const LoginRegister = () => {
           type: role,
         })
         .then((response) => {
-          console.log(response);
+          login(username, password);
+        })
+        .catch((error) => {
+          console.error("Error during registration:", error);
         });
     }
   };
@@ -76,7 +91,6 @@ const LoginRegister = () => {
   };
 
   return (
-    //login/register form
     <>
       {!loginStatus ? (
         <div className="TimesheetForm">
@@ -124,17 +138,23 @@ const LoginRegister = () => {
                     />
                     Manager
                   </label>
+                  <label>
+                    <input
+                      type="radio"
+                      value="finance"
+                      checked={role === "finance"}
+                      onChange={handleRoleChange}
+                    />
+                    Finance
+                  </label>
                 </div>
               </div>
             )}
-            {/* first */}
             <button type="submit">{showLogin ? "Login" : "Register"}</button>
           </form>
-          {/* second */}
           <button onClick={toggleForm}>
             {showLogin ? "Need to Register?" : "Back to Login"}
           </button>
-          <h3>{loginStatus}</h3>
         </div>
       ) : (
         <button onClick={handleLogoutAndRedirect}>Logout</button>

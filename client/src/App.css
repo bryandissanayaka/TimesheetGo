@@ -94,7 +94,8 @@ body,
   margin-right: 10px; /* Add spacing between label and input */
 }
 
-.TimePicker input {
+.TimePicker input,
+.weekInputContainer input {
   width: 100px;
   padding: 5px;
   font-size: 16px;
@@ -113,16 +114,6 @@ button {
   cursor: pointer;
   background-color: #eb455f;
   color: #fcffe7;
-}
-
-.WeekInputContainer {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.WeekInputContainer input {
-  margin-right: 10px;
 }
 
 table {
@@ -154,4 +145,17 @@ tr:nth-child(even) {
 
 .align-h h2 {
   margin: 0;
+}
+
+.weekInputContainer {
+  display: inline-flex;
+  align-items: center;
+}
+
+.weekInputContainer input {
+  margin-right: 0.5rem;
+}
+
+.weekInputContainer button {
+  margin-left: 0.5rem;
 }

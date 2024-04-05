@@ -1,16 +1,36 @@
 import React, { useContext } from "react";
 import "../App.css";
-
-import { SidebarData } from "./SidebarData";
+import {
+  ConsultantSidebar,
+  ManagerSidebar,
+  FinanceSidebar,
+} from "./SidebarData";
 import { LoginContext } from "../LoginContext";
 
 export default function Sidebar() {
-  const { loginStatus } = useContext(LoginContext);
+  const { loginStatus, roleStatus } = useContext(LoginContext);
+
+  let sidebarData;
+  switch (roleStatus) {
+    case "consultant":
+      sidebarData = ConsultantSidebar;
+      break;
+    case "manager":
+      sidebarData = ManagerSidebar;
+      break;
+    case "finance":
+      sidebarData = FinanceSidebar;
+      break;
+    default:
+      sidebarData = ConsultantSidebar;
+  }
+
   return (
     <div className="Sidebar">
       <h1 className="MainTitle"> TIMESHEETGO</h1>
+
       <ul className="SidebarList">
-        {SidebarData.map((val, key) => {
+        {sidebarData.map((val, key) => {
           return (
             <li
               key={key}
@@ -19,16 +39,16 @@ export default function Sidebar() {
               }}
               className="SidebarElement"
               id={
-                window.location.pathname == "/" && val.link == "/submit"
+                window.location.pathname === "/" && val.link === "/submit"
                   ? "active-sidebar-element"
-                  : window.location.pathname == val.link
+                  : window.location.pathname === val.link
                   ? "active-sidebar-element"
                   : ""
               }
             >
               <div id="sidebar-icon">{val.icon}</div>
               <h2 id="sidebar-title">
-                {val.title == "Logout"
+                {val.title === "Logout"
                   ? loginStatus
                     ? "Logout"
                     : "Login"
@@ -38,9 +58,9 @@ export default function Sidebar() {
           );
         })}
       </ul>
+
       <div>
-        <h2>Login Status:</h2>
-        <p>{loginStatus}</p>
+        <p>{"//temp// User ID: " + loginStatus + "\\nRole: " + roleStatus}</p>
       </div>
     </div>
   );
