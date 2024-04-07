@@ -137,6 +137,55 @@ app.get("/timesheets/:consultantId", (req, res) => {
   );
 });
 
+app.get("/alltimesheets", (req, res) => {
+  db.query(
+    "SELECT * FROM timesheets WHERE status = ?",
+    ["approved"],
+    (error, results) => {
+      if (error) {
+        console.error("Error occurred while retrieving timesheets:", error);
+        res.status(500).send("Error occurred while retrieving timesheets");
+      } else {
+        res.status(200).json(results);
+      }
+    }
+  );
+});
+
+app.get("/get-users", (req, res) => {
+  const query = "SELECT * FROM users";
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("Error querying the database:", err);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
+
+    // Wrap the result in an array if it's not already an array
+    const userData = Array.isArray(results) ? results : [results];
+
+    res.json(userData);
+  });
+});
+
+app.put("/change-password/:userId", (req, res) => {
+  const userId = req.params.userId;
+  const newPassword = req.body.newPassword;
+
+  const query = "UPDATE users SET password = ? WHERE id = ?";
+
+  db.query(query, [newPassword, userId], (error, results) => {
+    if (error) {
+      console.error("Error updating password:", error);
+      res
+        .status(500)
+        .json({ error: "An error occurred while updating the password" });
+    } else {
+      res.json({ message: "Password changed successfully" });
+    }
+  });
+});
+
 app.listen(5000, () => {
   console.log(`Server running on port 5000.`);
 });

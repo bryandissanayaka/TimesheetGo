@@ -6,7 +6,6 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login"; // Import the LoginIcon
 import HelpIcon from "@mui/icons-material/Help";
 
-
 export const ConsultantSidebar = [
   {
     title: "Submit Timesheet",
@@ -62,7 +61,30 @@ export const FinanceSidebar = [
   {
     title: "View Timesheets",
     icon: <GradingIcon />,
-    link: "/view",
+    link: "/financeview",
+  },
+  {
+    title: "Reminders",
+    icon: <NotificationsIcon />,
+    link: "/reminders",
+  },
+  {
+    title: "Help",
+    icon: <HelpIcon />,
+    link: "/help",
+  },
+  {
+    title: "Logout",
+    icon: <LogoutIcon />,
+    link: "/login",
+  },
+];
+
+export const ItSidebar = [
+  {
+    title: "Users",
+    icon: <GradingIcon />,
+    link: "/users",
   },
   {
     title: "Reminders",

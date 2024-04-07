@@ -4,6 +4,7 @@ import {
   ConsultantSidebar,
   ManagerSidebar,
   FinanceSidebar,
+  ItSidebar,
 } from "./SidebarData";
 import { LoginContext } from "../LoginContext";
 
@@ -20,6 +21,9 @@ export default function Sidebar() {
       break;
     case "finance":
       sidebarData = FinanceSidebar;
+      break;
+    case "it":
+      sidebarData = ItSidebar;
       break;
     default:
       sidebarData = ConsultantSidebar;
@@ -60,7 +64,7 @@ export default function Sidebar() {
       </ul>
 
       <div>
-        <p>{"//temp// User ID: " + loginStatus + "\\nRole: " + roleStatus}</p>
+        <p>{"//temp// User ID: " + loginStatus + "\nRole: " + roleStatus}</p>
       </div>
     </div>
   );

@@ -8,7 +8,8 @@ import Reminders from "./pages/Reminders.jsx";
 import Help from "./pages/Help.jsx";
 import LoginRegister from "./pages/LoginRegister.jsx";
 import { LoginContext, LoginProvider } from "./LoginContext.jsx";
-
+import Users from "./pages/Users.jsx";
+import FinanceView from "./pages/FinanceView.jsx";
 export default function App() {
   return (
     <div className="App">
@@ -42,6 +43,12 @@ const PageRouter = () => {
       break;
     case "/login":
       page = <LoginRegister />;
+      break;
+    case "/users":
+      page = <Users />;
+      break;
+    case "/financeview":
+      page = <FinanceView />;
       break;
     //}
   }

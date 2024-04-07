@@ -147,6 +147,15 @@ const LoginRegister = () => {
                     />
                     Finance
                   </label>
+                  <label>
+                    <input
+                      type="radio"
+                      value="it"
+                      checked={role === "it"}
+                      onChange={handleRoleChange}
+                    />
+                    IT
+                  </label>
                 </div>
               </div>
             )}

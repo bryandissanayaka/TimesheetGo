@@ -11,13 +11,13 @@ USE CASES:
 - submit ts ✅
 - view ts ✅
 - export timesheet ✅
+- it support (change user passwords) ✅
+- finance team see approved timesheets ✅
 - approve/reject ts
 - set reminders (maybe dont need to do this)
 - get help: just record video and embed or put some ss with text descriptions
 - edit rejected ts (prob would be hardest use case)
 
--finance team see approved timesheets
--it support (change user passwords, delete users...)
 
 -mark overtime/holiday hours (either for each day or by tick)
 
