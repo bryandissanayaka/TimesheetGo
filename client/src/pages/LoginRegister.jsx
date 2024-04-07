@@ -48,6 +48,8 @@ const LoginRegister = () => {
           setRoleStatus(response.data[0].type);
           if (response.data[0].type === "consultant") {
             window.location.pathname = "/submit";
+          } else if (response.data[0].type === "finance") {
+            window.location.pathname = "/financeview";
           } else {
             window.location.pathname = "/view";
           }

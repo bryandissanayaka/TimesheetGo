@@ -13,7 +13,7 @@ USE CASES:
 - export timesheet ✅
 - it support (change user passwords) ✅
 - finance team see approved timesheets ✅
-- approve/reject ts
+- approve/reject ts ✅
 - set reminders (maybe dont need to do this)
 - get help: just record video and embed or put some ss with text descriptions
 - edit rejected ts (prob would be hardest use case)
@@ -22,10 +22,13 @@ USE CASES:
 -mark overtime/holiday hours (either for each day or by tick)
 
 NEED TO FIX:
-week start date needs to have a default value
+week start date needs to have a default value ✅
 in view ts tab -> need to fix scrolling when many ts are there
-show that username is taken
+show that username is taken when registering
+remove seconds from clock in/out times
+fix timesheet form css by making a table
 
-questions:
-does login need to fully work
-    if username exists show user
+/       clock in | clock out
+monday    00:00   
+tuesday
+...

@@ -10,6 +10,7 @@ import LoginRegister from "./pages/LoginRegister.jsx";
 import { LoginContext, LoginProvider } from "./LoginContext.jsx";
 import Users from "./pages/Users.jsx";
 import FinanceView from "./pages/FinanceView.jsx";
+import ManagerView from "./pages/ManagerView.jsx";
 export default function App() {
   return (
     <div className="App">
@@ -50,6 +51,8 @@ const PageRouter = () => {
     case "/financeview":
       page = <FinanceView />;
       break;
+    case "/managerview":
+      page = <ManagerView />;
     //}
   }
 

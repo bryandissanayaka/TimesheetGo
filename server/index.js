@@ -137,7 +137,7 @@ app.get("/timesheets/:consultantId", (req, res) => {
   );
 });
 
-app.get("/alltimesheets", (req, res) => {
+app.get("/approved-timesheets", (req, res) => {
   db.query(
     "SELECT * FROM timesheets WHERE status = ?",
     ["approved"],
@@ -147,6 +147,41 @@ app.get("/alltimesheets", (req, res) => {
         res.status(500).send("Error occurred while retrieving timesheets");
       } else {
         res.status(200).json(results);
+      }
+    }
+  );
+});
+
+app.get("/pending-timesheets", (req, res) => {
+  db.query(
+    "SELECT * FROM timesheets WHERE status = ?",
+    ["pending"],
+    (error, results) => {
+      if (error) {
+        console.error("Error occurred while retrieving timesheets:", error);
+        res.status(500).send("Error occurred while retrieving timesheets");
+      } else {
+        res.status(200).json(results);
+      }
+    }
+  );
+});
+
+app.put("/update-timesheet/:timesheetId", (req, res) => {
+  const timesheetId = req.params.timesheetId;
+  const newStatus = req.body.status;
+  console.log(timesheetId);
+  db.query(
+    "UPDATE timesheets SET status = ? WHERE timesheet_id = ?",
+    [newStatus, timesheetId],
+    (error, results) => {
+      if (error) {
+        console.error("Error occurred while updating timesheet status:", error);
+        res.status(500).send("Error occurred while updating timesheet status");
+      } else {
+        res
+          .status(200)
+          .json({ message: "Timesheet status updated successfully" });
       }
     }
   );

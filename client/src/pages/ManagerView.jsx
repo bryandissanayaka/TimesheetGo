@@ -1,16 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { LoginContext } from "../LoginContext";
 import * as XLSX from "xlsx";
 
-const FinanceView = () => {
+const ManagerView = () => {
   const [timesheets, setTimesheets] = useState([]);
 
   useEffect(() => {
     const fetchTimesheets = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/approved-timesheets"
+          "http://localhost:5000/pending-timesheets"
         );
         setTimesheets(response.data);
       } catch (error) {
@@ -28,10 +27,23 @@ const FinanceView = () => {
     XLSX.writeFile(workbook, "timesheets.xlsx");
   };
 
+  const changeStatus = async (timesheetId, newStatus) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/update-timesheet/${timesheetId}`,
+        { status: newStatus }
+      );
+      console.log(response.data);
+      window.location.reload();
+    } catch (error) {
+      console.error("Error updating timesheet status:", error);
+    }
+  };
+
   return (
     <div className="TimesheetForm">
       <div className="align-h">
-        <h2>Approved Timesheets</h2>
+        <h2>Manager View</h2>
         {timesheets.length > 0 && (
           <button onClick={exportToExcel}>Download Timesheets</button>
         )}
@@ -42,7 +54,7 @@ const FinanceView = () => {
             <tr>
               <th>Project Name</th>
               <th>Week Of</th>
-              <th>Consultant ID</th>
+              <th>Status</th>
               <th>Monday</th>
               <th>Tuesday</th>
               <th>Wednesday</th>
@@ -50,11 +62,12 @@ const FinanceView = () => {
               <th>Friday</th>
               <th>Saturday</th>
               <th>Sunday</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {timesheets.map((timesheet) => (
-              <tr key={timesheet.id}>
+              <tr key={timesheet.timesheet_id}>
                 <td>{timesheet.project_name}</td>
                 <td>
                   {new Date(timesheet.week_of).toLocaleString("en-US", {
@@ -63,7 +76,7 @@ const FinanceView = () => {
                     year: "numeric",
                   })}
                 </td>
-                <td>{timesheet.consultant_id}</td>
+                <td>{timesheet.status}</td>
                 <td>
                   {timesheet.monday_in} - {timesheet.monday_out}
                 </td>
@@ -85,6 +98,22 @@ const FinanceView = () => {
                 <td>
                   {timesheet.sunday_in} - {timesheet.sunday_out}
                 </td>
+                <td>
+                  <button
+                    onClick={() =>
+                      changeStatus(timesheet.timesheet_id, "approved")
+                    }
+                  >
+                    Approve
+                  </button>
+                  <button
+                    onClick={() =>
+                      changeStatus(timesheet.timesheet_id, "rejected")
+                    }
+                  >
+                    Reject
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -96,4 +125,4 @@ const FinanceView = () => {
   );
 };
 
-export default FinanceView;
+export default ManagerView;

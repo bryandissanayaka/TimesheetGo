@@ -38,7 +38,7 @@ export const ManagerSidebar = [
   {
     title: "View Timesheets",
     icon: <GradingIcon />,
-    link: "/view",
+    link: "/managerview",
   },
   {
     title: "Reminders",
