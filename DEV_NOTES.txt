@@ -2,21 +2,21 @@ Tutorial could be a question mark button in the corner that takes you to a video
 
 https://colorhunt.co/palette/eb455ffcffe7bad7e92b3467
 
-COULD DO:
-- could change routing to use react router to not render the entire page when changing page - this is kinda long and unnecessary so leave it for later
 
 USE CASES:
-- login ✅
-- register ✅ 
-- submit ts ✅
-- view ts ✅
-- export timesheet ✅
-- it support (change user passwords) ✅
-- finance team see approved timesheets ✅
-- approve/reject ts ✅
-- set reminders (maybe dont need to do this)
+✅ login 
+✅ register  
+✅ submit ts 
+✅ view ts 
+✅ export timesheets to excel
+✅ it support (change user passwords) 
+✅ finance team see approved timesheets 
+✅ approve/reject ts 
+✅ set reminders (maybe dont need to do this) 
+✅ export reminders to excel
+✅ resubmit previous timesheet for this week
 - get help: just record video and embed or put some ss with text descriptions
-- edit rejected ts (prob would be hardest use case)
+
 
 
 -mark overtime/holiday hours (either for each day or by tick)

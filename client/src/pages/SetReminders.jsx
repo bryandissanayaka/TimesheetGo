@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const Users = () => {
+const SetReminders = () => {
   const [users, setUsers] = useState([]);
-  const [passwordInput, setPasswordInput] = useState({});
+  const [reminderInput, setReminderInput] = useState({});
 
   useEffect(() => {
     fetchUsers();
@@ -11,44 +11,44 @@ const Users = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/get-users");
+      const response = await axios.get("http://localhost:5000/get-consultants");
       setUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
     }
   };
 
-  const handlePasswordChange = (userId, event) => {
-    setPasswordInput((prevState) => ({
+  const handleReminderChange = (userId, event) => {
+    setReminderInput((prevState) => ({
       ...prevState,
       [userId]: event.target.value,
     }));
   };
 
-  const changePassword = async (userId) => {
+  const setReminder = async (userId) => {
     try {
-      const newPassword = passwordInput[userId];
+      const reminder = reminderInput[userId];
       const response = await axios.put(
-        `http://localhost:5000/change-password/${userId}`,
-        { newPassword }
+        `http://localhost:5000/set-reminder/${userId}`,
+        { reminder: reminder }
       );
       console.log(response.data);
-      window.location.reload();
+      alert("Reminder sent.");
+      //window.location.reload();
     } catch (error) {
-      console.error("Error changing password:", error);
+      console.error("Error settings reminder:", error);
     }
   };
 
   return (
     <div className="TimesheetForm">
-      <h2>Users</h2>
+      <h2>Consultants</h2>
       <table>
         <thead>
           <tr>
-            <th>User ID</th>
+            <th>Consultant ID</th>
             <th>Username</th>
-            <th>Role</th>
-            <th>Change Password</th>
+            <th>Send Reminder</th>
           </tr>
         </thead>
         <tbody>
@@ -57,16 +57,13 @@ const Users = () => {
               <tr key={user.id}>
                 <td>{user.id}</td>
                 <td>{user.username}</td>
-                <td>{user.type}</td>
                 <td>
                   <input
-                    type="password"
-                    value={passwordInput[user.id] || ""}
-                    onChange={(event) => handlePasswordChange(user.id, event)}
+                    type="text"
+                    value={reminderInput[user.id] || ""}
+                    onChange={(event) => handleReminderChange(user.id, event)}
                   />
-                  <button onClick={() => changePassword(user.id)}>
-                    Change
-                  </button>
+                  <button onClick={() => setReminder(user.id)}>Send</button>
                 </td>
               </tr>
             ))
@@ -81,4 +78,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default SetReminders;

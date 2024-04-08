@@ -48,8 +48,12 @@ const LoginRegister = () => {
           setRoleStatus(response.data[0].type);
           if (response.data[0].type === "consultant") {
             window.location.pathname = "/submit";
+          } else if (response.data[0].type === "manager") {
+            window.location.pathname = "/managerview";
           } else if (response.data[0].type === "finance") {
             window.location.pathname = "/financeview";
+          } else if (response.data[0].type === "it") {
+            window.location.pathname = "/users";
           } else {
             window.location.pathname = "/view";
           }
@@ -81,6 +85,7 @@ const LoginRegister = () => {
         })
         .catch((error) => {
           console.error("Error during registration:", error);
+          alert(error.response.data);
         });
     }
   };

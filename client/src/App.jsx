@@ -11,6 +11,8 @@ import { LoginContext, LoginProvider } from "./LoginContext.jsx";
 import Users from "./pages/Users.jsx";
 import FinanceView from "./pages/FinanceView.jsx";
 import ManagerView from "./pages/ManagerView.jsx";
+import SetReminders from "./pages/SetReminders.jsx";
+
 export default function App() {
   return (
     <div className="App">
@@ -25,7 +27,6 @@ export default function App() {
 const PageRouter = () => {
   let page;
 
-  //if (loginStatus) {
   switch (window.location.pathname) {
     case "/":
       page = <Submit />;
@@ -53,7 +54,10 @@ const PageRouter = () => {
       break;
     case "/managerview":
       page = <ManagerView />;
-    //}
+      break;
+    case "/setreminders":
+      page = <SetReminders />;
+      break;
   }
 
   return <div className="Page">{page}</div>;

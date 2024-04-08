@@ -148,8 +148,9 @@ const TimesheetForm = () => {
     <div className="TimesheetForm">
       <form onSubmit={handleSubmit}>
         <label>
-          Project Name:
+          Project Name
           <input
+            className="projectNameInput"
             type="text"
             name="ProjectName"
             value={timesheetData.ProjectName}
@@ -159,7 +160,7 @@ const TimesheetForm = () => {
         <br />
         <br />
         <label>
-          Week Start Date:
+          Week Start Date
           <div className="weekInputContainer">
             <input
               type="date"
@@ -174,146 +175,150 @@ const TimesheetForm = () => {
         </label>
         <br />
         <br />
-        <div className="TimePicker">
-          <label>
-            Monday Clock In:
-            <input
-              type="time"
-              name="MondayClockIn"
-              value={timesheetData.MondayClockIn}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Monday Clock Out:
-            <input
-              type="time"
-              name="MondayClockOut"
-              value={timesheetData.MondayClockOut}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <div className="TimePicker">
-          <label>
-            Tuesday Clock In:
-            <input
-              type="time"
-              name="TuesdayClockIn"
-              value={timesheetData.TuesdayClockIn}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Tuesday Clock Out:
-            <input
-              type="time"
-              name="TuesdayClockOut"
-              value={timesheetData.TuesdayClockOut}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <div className="TimePicker">
-          <label>
-            Wednesday Clock In:
-            <input
-              type="time"
-              name="WednesdayClockIn"
-              value={timesheetData.WednesdayClockIn}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Wednesday Clock Out:
-            <input
-              type="time"
-              name="WednesdayClockOut"
-              value={timesheetData.WednesdayClockOut}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <div className="TimePicker">
-          <label>
-            Thursday Clock In:
-            <input
-              type="time"
-              name="ThursdayClockIn"
-              value={timesheetData.ThursdayClockIn}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Thursday Clock Out:
-            <input
-              type="time"
-              name="ThursdayClockOut"
-              value={timesheetData.ThursdayClockOut}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <div className="TimePicker">
-          <label>
-            Friday Clock In:
-            <input
-              type="time"
-              name="FridayClockIn"
-              value={timesheetData.FridayClockIn}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Friday Clock Out:
-            <input
-              type="time"
-              name="FridayClockOut"
-              value={timesheetData.FridayClockOut}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <div className="TimePicker">
-          <label>
-            Saturday Clock In:
-            <input
-              type="time"
-              name="SaturdayClockIn"
-              value={timesheetData.SaturdayClockIn}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Saturday Clock Out:
-            <input
-              type="time"
-              name="SaturdayClockOut"
-              value={timesheetData.SaturdayClockOut}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <div className="TimePicker">
-          <label>
-            Sunday Clock In:
-            <input
-              type="time"
-              name="SundayClockIn"
-              value={timesheetData.SundayClockIn}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Sunday Clock Out:
-            <input
-              type="time"
-              name="SundayClockOut"
-              value={timesheetData.SundayClockOut}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Clock In</th>
+              <th>Clock Out</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Monday</td>
+              <td>
+                <input
+                  type="time"
+                  name="MondayClockIn"
+                  value={timesheetData.MondayClockIn}
+                  onChange={handleChange}
+                />
+              </td>
+              <td>
+                <input
+                  type="time"
+                  name="MondayClockOut"
+                  value={timesheetData.MondayClockOut}
+                  onChange={handleChange}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Tuesday</td>
+              <td>
+                <input
+                  type="time"
+                  name="TuesdayClockIn"
+                  value={timesheetData.TuesdayClockIn}
+                  onChange={handleChange}
+                />
+              </td>
+              <td>
+                <input
+                  type="time"
+                  name="TuesdayClockOut"
+                  value={timesheetData.TuesdayClockOut}
+                  onChange={handleChange}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Wednesday</td>
+              <td>
+                <input
+                  type="time"
+                  name="WednesdayClockIn"
+                  value={timesheetData.WednesdayClockIn}
+                  onChange={handleChange}
+                />
+              </td>
+              <td>
+                <input
+                  type="time"
+                  name="WednesdayClockOut"
+                  value={timesheetData.WednesdayClockOut}
+                  onChange={handleChange}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Thursday</td>
+              <td>
+                <input
+                  type="time"
+                  name="ThursdayClockIn"
+                  value={timesheetData.ThursdayClockIn}
+                  onChange={handleChange}
+                />
+              </td>
+              <td>
+                <input
+                  type="time"
+                  name="ThursdayClockOut"
+                  value={timesheetData.ThursdayClockOut}
+                  onChange={handleChange}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Friday</td>
+              <td>
+                <input
+                  type="time"
+                  name="FridayClockIn"
+                  value={timesheetData.FridayClockIn}
+                  onChange={handleChange}
+                />
+              </td>
+              <td>
+                <input
+                  type="time"
+                  name="FridayClockOut"
+                  value={timesheetData.FridayClockOut}
+                  onChange={handleChange}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Saturday</td>
+              <td>
+                <input
+                  type="time"
+                  name="SaturdayClockIn"
+                  value={timesheetData.SaturdayClockIn}
+                  onChange={handleChange}
+                />
+              </td>
+              <td>
+                <input
+                  type="time"
+                  name="SaturdayClockOut"
+                  value={timesheetData.SaturdayClockOut}
+                  onChange={handleChange}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Sunday</td>
+              <td>
+                <input
+                  type="time"
+                  name="SundayClockIn"
+                  value={timesheetData.SundayClockIn}
+                  onChange={handleChange}
+                />
+              </td>
+              <td>
+                <input
+                  type="time"
+                  name="SundayClockOut"
+                  value={timesheetData.SundayClockOut}
+                  onChange={handleChange}
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <br />
         <button className="RedButton" type="submit">
           Submit

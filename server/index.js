@@ -221,6 +221,73 @@ app.put("/change-password/:userId", (req, res) => {
   });
 });
 
+app.get("/get-consultants", (req, res) => {
+  const query = "SELECT * FROM users WHERE type = 'consultant'";
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("Error querying the database:", err);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
+    const userData = Array.isArray(results) ? results : [results];
+
+    res.json(userData);
+  });
+});
+
+app.put("/set-reminder/:userId", (req, res) => {
+  const userId = req.params.userId;
+  const reminder = req.body.reminder;
+
+  const query = "INSERT INTO reminders (consultant_id, reminder) VALUES (?, ?)";
+
+  db.query(query, [userId, reminder], (error, results) => {
+    if (error) {
+      console.error("Error setting reminder:", error);
+      res
+        .status(500)
+        .json({ error: "An error occurred while setting the reminder" });
+    } else {
+      res.json({ message: "Reminder set successfully" });
+    }
+  });
+});
+
+app.get("/get-reminders/:userId", (req, res) => {
+  const userId = req.params.userId;
+  const query = "SELECT * FROM reminders WHERE consultant_id = ?";
+
+  db.query(query, [userId], (error, results) => {
+    if (error) {
+      console.error("Error getting reminders:", error);
+      res
+        .status(500)
+        .json({ error: "An error occurred while getting the reminders" });
+    } else {
+      // Send the array of reminders as the response
+      res.json(results);
+    }
+  });
+});
+
+app.delete("/delete-reminder/:reminderId", (req, res) => {
+  const reminderId = req.params.reminderId;
+  const query = "DELETE FROM reminders WHERE reminder_id = ?";
+
+  db.query(query, [reminderId], (error, results) => {
+    if (error) {
+      console.error("Error deleting reminder:", error);
+      res
+        .status(500)
+        .json({ error: "An error occurred while deleting the reminder" });
+    } else {
+      res.json({ message: "Reminder deleted successfully" });
+    }
+  });
+});
+
+
+
 app.listen(5000, () => {
   console.log(`Server running on port 5000.`);
 });

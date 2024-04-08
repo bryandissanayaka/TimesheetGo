@@ -3,8 +3,9 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import GradingIcon from "@mui/icons-material/Grading";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import LogoutIcon from "@mui/icons-material/Logout";
-import LoginIcon from "@mui/icons-material/Login"; // Import the LoginIcon
+import LoginIcon from "@mui/icons-material/Login";
 import HelpIcon from "@mui/icons-material/Help";
+import PeopleIcon from "@mui/icons-material/People";
 
 export const ConsultantSidebar = [
   {
@@ -41,14 +42,9 @@ export const ManagerSidebar = [
     link: "/managerview",
   },
   {
-    title: "Reminders",
+    title: "Set Reminders",
     icon: <NotificationsIcon />,
-    link: "/reminders",
-  },
-  {
-    title: "Help",
-    icon: <HelpIcon />,
-    link: "/help",
+    link: "/setreminders",
   },
   {
     title: "Logout",
@@ -64,16 +60,6 @@ export const FinanceSidebar = [
     link: "/financeview",
   },
   {
-    title: "Reminders",
-    icon: <NotificationsIcon />,
-    link: "/reminders",
-  },
-  {
-    title: "Help",
-    icon: <HelpIcon />,
-    link: "/help",
-  },
-  {
     title: "Logout",
     icon: <LogoutIcon />,
     link: "/login",
@@ -83,18 +69,8 @@ export const FinanceSidebar = [
 export const ItSidebar = [
   {
     title: "Users",
-    icon: <GradingIcon />,
+    icon: <PeopleIcon />,
     link: "/users",
-  },
-  {
-    title: "Reminders",
-    icon: <NotificationsIcon />,
-    link: "/reminders",
-  },
-  {
-    title: "Help",
-    icon: <HelpIcon />,
-    link: "/help",
   },
   {
     title: "Logout",
@@ -102,3 +78,12 @@ export const ItSidebar = [
     link: "/login",
   },
 ];
+
+export const LoggedOutSidebar = [
+  {
+    title: "Logout",
+    icon: <LogoutIcon />,
+    link: "/login",
+  },
+];
+

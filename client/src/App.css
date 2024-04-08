@@ -61,7 +61,7 @@ body {
 }
 
 .SidebarElement #sidebar-icon {
-  flex: 30%;
+  flex: 20%;
   display: grid;
   place-items: center;
 }
@@ -93,7 +93,7 @@ body {
 .TimePicker label {
   display: flex;
   align-items: center;
-  margin-right: 10px; /* Add spacing between label and input */
+  margin-right: 10px;
 }
 
 .TimePicker input,
@@ -101,7 +101,7 @@ body {
   width: 100px;
   padding: 5px;
   font-size: 16px;
-  margin-left: 5px; /* Add spacing between label and input */
+  margin-left: 5px;
 }
 
 button {
@@ -160,4 +160,12 @@ tr:nth-child(even) {
 
 .weekInputContainer button {
   margin-left: 0.5rem;
+}
+
+.TimesheetForm form table {
+  background-color: #fcffe7;
+}
+
+.projectNameInput {
+  margin-left: 1.5rem;
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import * as XLSX from "xlsx";
-
+import formatTime from "../components/FormatTime";
 const ManagerView = () => {
   const [timesheets, setTimesheets] = useState([]);
 
@@ -78,25 +78,32 @@ const ManagerView = () => {
                 </td>
                 <td>{timesheet.status}</td>
                 <td>
-                  {timesheet.monday_in} - {timesheet.monday_out}
+                  {formatTime(timesheet.monday_in)} -{" "}
+                  {formatTime(timesheet.monday_out)}
                 </td>
                 <td>
-                  {timesheet.tuesday_in} - {timesheet.tuesday_out}
+                  {formatTime(timesheet.tuesday_in)} -{" "}
+                  {formatTime(timesheet.tuesday_out)}
                 </td>
                 <td>
-                  {timesheet.wednesday_in} - {timesheet.wednesday_out}
+                  {formatTime(timesheet.wednesday_in)} -{" "}
+                  {formatTime(timesheet.wednesday_out)}
                 </td>
                 <td>
-                  {timesheet.thursday_in} - {timesheet.thursday_out}
+                  {formatTime(timesheet.thursday_in)} -{" "}
+                  {formatTime(timesheet.thursday_out)}
                 </td>
                 <td>
-                  {timesheet.friday_in} - {timesheet.friday_out}
+                  {formatTime(timesheet.friday_in)} -{" "}
+                  {formatTime(timesheet.friday_out)}
                 </td>
                 <td>
-                  {timesheet.saturday_in} - {timesheet.saturday_out}
+                  {formatTime(timesheet.saturday_in)} -{" "}
+                  {formatTime(timesheet.saturday_out)}
                 </td>
                 <td>
-                  {timesheet.sunday_in} - {timesheet.sunday_out}
+                  {formatTime(timesheet.sunday_in)} -{" "}
+                  {formatTime(timesheet.sunday_out)}
                 </td>
                 <td>
                   <button

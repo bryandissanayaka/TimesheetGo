@@ -5,6 +5,7 @@ import {
   ManagerSidebar,
   FinanceSidebar,
   ItSidebar,
+  LoggedOutSidebar,
 } from "./SidebarData";
 import { LoginContext } from "../LoginContext";
 
@@ -26,7 +27,8 @@ export default function Sidebar() {
       sidebarData = ItSidebar;
       break;
     default:
-      sidebarData = ConsultantSidebar;
+      sidebarData = LoggedOutSidebar;
+      break;
   }
 
   return (
@@ -62,10 +64,6 @@ export default function Sidebar() {
           );
         })}
       </ul>
-
-      <div>
-        <p>{"//temp// User ID: " + loginStatus + "\nRole: " + roleStatus}</p>
-      </div>
     </div>
   );
 }
