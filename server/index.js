@@ -1,17 +1,18 @@
 const express = require("express");
-const mysql = require("mysql");
+const sqlite3 = require("sqlite3").verbose();
 const cors = require("cors");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-const db = mysql.createConnection({
-  user: "root",
-  host: "localhost",
-  password: "password123",
-  database: "timesheetgo",
+const db = new sqlite3.Database("timesheetgo.db", (err) => {
+  if (err) {
+    console.error(err.message);
+  }
+  console.log("Connected to the SQLite database.");
 });
+db.run("PRAGMA foreign_keys = ON");
 
 app.post("/submit-timesheet", (req, res) => {
   //res.send("backend submit timesheet");
@@ -34,7 +35,7 @@ app.post("/submit-timesheet", (req, res) => {
   const SundayClockIn = req.body.SundayClockIn;
   const SundayClockOut = req.body.SundayClockOut;
   console.log(`ID: ${ConsultantId}`);
-  db.query(
+  db.run(
     "INSERT INTO timesheets (consultant_id, status, week_of, project_name, monday_in, monday_out, tuesday_in, tuesday_out, wednesday_in, wednesday_out, thursday_in, thursday_out, friday_in, friday_out, saturday_in, saturday_out, sunday_in, sunday_out) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
     [
       ConsultantId,
@@ -74,47 +75,49 @@ app.post("/submit-register", (req, res) => {
   const type = req.body.type;
 
   // First, check if the username already exists
-  db.query(
-    "SELECT * FROM users WHERE username = ?",
-    [username],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      }
-      if (result.length > 0) {
-        res.status(400).send("Username already exists");
-        return;
-      }
-      //if username does not exist
-      db.query(
-        "INSERT INTO users (type, username, password) VALUES (?,?,?)",
-        [type, username, password],
-        (err, result) => {
-          if (err) {
-            console.log(err);
-          } else {
-            res.status(200).send("Registration successful");
-          }
-        }
-      );
+  db.get("SELECT * FROM users WHERE username = ?", [username], (err, row) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).send("Internal Server Error");
     }
-  );
+
+    if (row) {
+      return res.status(400).send("Username already exists");
+    }
+
+    // If username does not exist
+    db.run(
+      "INSERT INTO users (type, username, password) VALUES (?, ?, ?)",
+      [type, username, password],
+      function (err) {
+        if (err) {
+          console.log(err);
+          return res.status(500).send("Internal Server Error");
+        } else {
+          return res.status(200).send("Registration successful");
+        }
+      }
+    );
+  });
 });
 
 app.post("/submit-login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-  db.query(
+
+  db.all(
     "SELECT * FROM users WHERE username = ? AND password = ?",
     [username, password],
-    (err, result) => {
+    (err, rows) => {
       if (err) {
-        res.send({ error: err });
+        console.error(err);
+        return res.status(500).send({ error: "Internal Server Error" });
       }
-      if (result.length > 0) {
-        res.send(result);
+
+      if (rows.length > 0) {
+        return res.status(200).json(rows);
       } else {
-        res.send({ message: "Wrong username or password." });
+        return res.status(401).send({ message: "Wrong username or password." });
       }
     }
   );
@@ -123,45 +126,45 @@ app.post("/submit-login", (req, res) => {
 app.get("/timesheets/:consultantId", (req, res) => {
   const consultantId = req.params.consultantId;
 
-  db.query(
+  db.all(
     "SELECT * FROM timesheets WHERE consultant_id = ?",
     [consultantId],
-    (error, results) => {
+    (error, rows) => {
       if (error) {
         console.error("Error occurred while retrieving timesheets:", error);
         res.status(500).send("Error occurred while retrieving timesheets");
       } else {
-        res.status(200).json(results);
+        res.status(200).json(rows);
       }
     }
   );
 });
 
 app.get("/approved-timesheets", (req, res) => {
-  db.query(
+  db.all(
     "SELECT * FROM timesheets WHERE status = ?",
     ["approved"],
-    (error, results) => {
+    (error, rows) => {
       if (error) {
         console.error("Error occurred while retrieving timesheets:", error);
         res.status(500).send("Error occurred while retrieving timesheets");
       } else {
-        res.status(200).json(results);
+        res.status(200).json(rows);
       }
     }
   );
 });
 
 app.get("/pending-timesheets", (req, res) => {
-  db.query(
+  db.all(
     "SELECT * FROM timesheets WHERE status = ?",
     ["pending"],
-    (error, results) => {
+    (error, rows) => {
       if (error) {
         console.error("Error occurred while retrieving timesheets:", error);
         res.status(500).send("Error occurred while retrieving timesheets");
       } else {
-        res.status(200).json(results);
+        res.status(200).json(rows);
       }
     }
   );
@@ -171,7 +174,7 @@ app.put("/update-timesheet/:timesheetId", (req, res) => {
   const timesheetId = req.params.timesheetId;
   const newStatus = req.body.status;
   console.log(timesheetId);
-  db.query(
+  db.run(
     "UPDATE timesheets SET status = ? WHERE timesheet_id = ?",
     [newStatus, timesheetId],
     (error, results) => {
@@ -189,17 +192,16 @@ app.put("/update-timesheet/:timesheetId", (req, res) => {
 
 app.get("/get-users", (req, res) => {
   const query = "SELECT * FROM users";
-  db.query(query, (err, results) => {
+
+  db.all(query, (err, rows) => {
     if (err) {
       console.error("Error querying the database:", err);
       res.status(500).json({ error: "Internal Server Error" });
       return;
     }
 
-    // Wrap the result in an array if it's not already an array
-    const userData = Array.isArray(results) ? results : [results];
-
-    res.json(userData);
+    // No need to wrap the result in an array, as db.all returns an array
+    res.json(rows);
   });
 });
 
@@ -209,7 +211,7 @@ app.put("/change-password/:userId", (req, res) => {
 
   const query = "UPDATE users SET password = ? WHERE id = ?";
 
-  db.query(query, [newPassword, userId], (error, results) => {
+  db.run(query, [newPassword, userId], (error, results) => {
     if (error) {
       console.error("Error updating password:", error);
       res
@@ -223,25 +225,23 @@ app.put("/change-password/:userId", (req, res) => {
 
 app.get("/get-consultants", (req, res) => {
   const query = "SELECT * FROM users WHERE type = 'consultant'";
-  db.query(query, (err, results) => {
+
+  db.all(query, (err, rows) => {
     if (err) {
       console.error("Error querying the database:", err);
       res.status(500).json({ error: "Internal Server Error" });
       return;
     }
-    const userData = Array.isArray(results) ? results : [results];
-
-    res.json(userData);
+    res.json(rows);
   });
 });
-
 app.put("/set-reminder/:userId", (req, res) => {
   const userId = req.params.userId;
   const reminder = req.body.reminder;
 
   const query = "INSERT INTO reminders (consultant_id, reminder) VALUES (?, ?)";
 
-  db.query(query, [userId, reminder], (error, results) => {
+  db.run(query, [userId, reminder], (error, results) => {
     if (error) {
       console.error("Error setting reminder:", error);
       res
@@ -257,15 +257,14 @@ app.get("/get-reminders/:userId", (req, res) => {
   const userId = req.params.userId;
   const query = "SELECT * FROM reminders WHERE consultant_id = ?";
 
-  db.query(query, [userId], (error, results) => {
+  db.all(query, [userId], (error, rows) => {
     if (error) {
       console.error("Error getting reminders:", error);
       res
         .status(500)
         .json({ error: "An error occurred while getting the reminders" });
     } else {
-      // Send the array of reminders as the response
-      res.json(results);
+      res.json(rows);
     }
   });
 });
@@ -274,7 +273,7 @@ app.delete("/delete-reminder/:reminderId", (req, res) => {
   const reminderId = req.params.reminderId;
   const query = "DELETE FROM reminders WHERE reminder_id = ?";
 
-  db.query(query, [reminderId], (error, results) => {
+  db.run(query, [reminderId], (error, results) => {
     if (error) {
       console.error("Error deleting reminder:", error);
       res
@@ -285,8 +284,6 @@ app.delete("/delete-reminder/:reminderId", (req, res) => {
     }
   });
 });
-
-
 
 app.listen(5000, () => {
   console.log(`Server running on port 5000.`);
