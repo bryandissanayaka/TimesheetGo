@@ -44,8 +44,8 @@ const LoginRegister = () => {
           alert("Incorrect username or password.");
         } else {
           setLoginStatus(`${response.data[0].id}`);
-          // Set roleStatus here
           setRoleStatus(response.data[0].type);
+
           if (response.data[0].type === "consultant") {
             window.location.pathname = "/submit";
           } else if (response.data[0].type === "manager") {
@@ -57,6 +57,14 @@ const LoginRegister = () => {
           } else {
             window.location.pathname = "/view";
           }
+        }
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 401) {
+          setLoginStatus("");
+          alert("Incorrect username or password.");
+        } else {
+          console.error(error);
         }
       });
   }
