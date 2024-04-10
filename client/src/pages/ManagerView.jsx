@@ -52,6 +52,7 @@ const ManagerView = () => {
         <table>
           <thead>
             <tr>
+              <th>Consultant ID</th>
               <th>Project Name</th>
               <th>Week Of</th>
               <th>Status</th>
@@ -68,6 +69,7 @@ const ManagerView = () => {
           <tbody>
             {timesheets.map((timesheet) => (
               <tr key={timesheet.timesheet_id}>
+                <td>{timesheet.consultant_id}</td>
                 <td>{timesheet.project_name}</td>
                 <td>
                   {new Date(timesheet.week_of).toLocaleString("en-US", {

@@ -17,7 +17,7 @@ module.exports = {
       "warn",
       { allowConstantExport: true },
     ],
-    "no-unused-vars": "off", //TODO: Check if this impacts performance
+    "no-unused-vars": "off", //Too risky to fix warnings now. if it works it works
     "react/prop-types": "off", // Added this when given errors in Sidebar->CustomLink()
   },
 };
